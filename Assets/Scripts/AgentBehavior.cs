@@ -7,47 +7,42 @@ namespace PlatformRunner
 {
     public class AgentBehavior : MonoBehaviour
     {
+        private NavMeshAgent m_Agent;
+        private Animator m_Animator;
 
-        private NavMeshAgent agent;
-        private Animator animator;
-
-        private Transform destination;
-        private Vector3 staringPosition;
-        private bool racing = false;
+        private Transform m_Destination;
+        private Vector3 m_StartingPosition;
+        private bool m_Racing = false;
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
-            agent = GetComponent<NavMeshAgent>();
+            m_Animator = GetComponent<Animator>();
+            m_Agent = GetComponent<NavMeshAgent>();
         }
 
         private void Update()
         {
-            //if (racing)
-            //{
-            //    agent.SetDestination(destination.position);
-            //}
-            
-            animator.SetFloat("MovementInput", agent.velocity.magnitude);
+            m_Animator.SetFloat("MovementInput", m_Agent.velocity.magnitude);
         }
 
         public void StartRacing(Transform finishLine)
         {
-            staringPosition = transform.position;
-            destination = finishLine;
-            racing = true;
+            m_StartingPosition = transform.position;
+            m_Destination = finishLine;
+            m_Racing = true;
 
-            agent.SetDestination(destination.position);
+            m_Agent.SetDestination(m_Destination.position);
         }
 
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.collider.tag == "Obstacle")
             {
-                transform.position = staringPosition;
+                m_Agent.Warp(m_StartingPosition);
+
+                StartRacing(m_Destination);
             }
         }
-
     }
 
 }

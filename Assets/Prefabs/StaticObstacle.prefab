@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 366542042792332799}
   - component: {fileID: 2518303025470306613}
   - component: {fileID: 2861607746269604280}
-  - component: {fileID: 2861607746269604285}
-  - component: {fileID: 2861607746269604282}
+  - component: {fileID: 800242815}
   m_Layer: 0
   m_Name: StaticObstacle
   m_TagString: Obstacle
@@ -95,30 +94,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.12875417, y: 0.089122504, z: 0.041758485}
-  m_Center: {x: 0, y: -0.0000000018626451, z: 0}
---- !u!114 &2861607746269604285
-MonoBehaviour:
+  m_Size: {x: 0.12, y: 0.1, z: 0.075}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &800242815
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4175456096034314464}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbb3849ae00d8f4bb5285fab9975a91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2861607746269604282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4175456096034314464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f5c50e1b5440944b165bfe76cb0f56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.064, y: 0.045, z: 0.0175}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

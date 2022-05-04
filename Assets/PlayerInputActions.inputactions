@@ -1,5 +1,5 @@
 {
-    "name": "InputActionManager",
+    "name": "PlayerInputActions",
     "maps": [
         {
             "name": "Player",
@@ -9,6 +9,24 @@
                     "name": "Movement",
                     "type": "Button",
                     "id": "9a0e77dd-df3e-4ead-9876-8197378538b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StartRace",
+                    "type": "Button",
+                    "id": "7afe64c7-1b1c-48b1-9118-34807f2771de",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Paint",
+                    "type": "Button",
+                    "id": "cea48cbc-783c-4b72-9db3-8c13b679bcfd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -81,6 +99,28 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "6ff49c01-eab5-485b-ba40-012e39bcae4e",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartRace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "474558c0-2459-4c55-949e-f13b4878e41b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Paint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -8,11 +8,13 @@ namespace PlatformRunner
 {
     public class PlayerRankingText : MonoBehaviour
     {
-        private Text text;
+        private Text m_Text;
 
         private void Start()
         {
-            text = GetComponent<Text>();
+            m_Text = GetComponent<Text>();
+
+            GameManager.Instance.PlayerFinished += OnPlayerFinished;
         }
 
         private void Update()
@@ -22,7 +24,11 @@ namespace PlatformRunner
 
         void OnPlayerRankingUpdated(int newRanking)
         {
-            text.text = "Ranking: " + newRanking;
+            m_Text.text = "Ranking: " + newRanking;
+        }
+        private void OnPlayerFinished()
+        {
+            m_Text.enabled = false;
         }
     }
 }

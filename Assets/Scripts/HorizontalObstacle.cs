@@ -9,37 +9,26 @@ namespace PlatformRunner
         public Transform Target;
         public float MovementSpeed = 10.0f;
 
-        private Vector3 startingPosition;
-        private Vector3 currentDestination;
-        private float distanceToDestination;
-
+        private Vector3 m_StartingPosition;
+        private Vector3 m_CurrentDestination;
+        private float m_DistanceToDestination;
         void Start()
         {
-            startingPosition = transform.position;
-            currentDestination = Target.position;
+            m_StartingPosition = transform.position;
+            m_CurrentDestination = Target.position;
         }
 
         void Update()
         {
-            distanceToDestination = Vector3.Distance(transform.position, currentDestination);
+            m_DistanceToDestination = Vector3.Distance(transform.position, m_CurrentDestination);
 
-            if (Mathf.Approximately(0.0f, distanceToDestination))
+            if (Mathf.Approximately(0.0f, m_DistanceToDestination))
             {
-                currentDestination = (currentDestination == startingPosition) ? Target.position : startingPosition;
+                m_CurrentDestination = (m_CurrentDestination == m_StartingPosition) ? Target.position : m_StartingPosition;
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, currentDestination, MovementSpeed * Time.deltaTime);
-            }
-        }
-
-        private void OnTriggerEnter(Collider collider)
-        {
-            CharacterController controller = collider.GetComponent<CharacterController>();
-            if (controller != null)
-            {
-                Debug.Log("Collision happened");
-                Debug.Log("Restart game");
+                transform.position = Vector3.MoveTowards(transform.position, m_CurrentDestination, MovementSpeed * Time.deltaTime);
             }
         }
     }

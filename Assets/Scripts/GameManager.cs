@@ -1,10 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.InputSystem;
 
 namespace PlatformRunner
 {
+    public enum RaceStatus
+    {
+        ON_WAIT = 0,
+        ACTIVE,
+        PAINTING,
+        FINISHED
+    }
+
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance 
@@ -24,6 +33,13 @@ namespace PlatformRunner
 
         private static GameManager instance;
 
+        public event Action<GameObject> PlayerSpawned;
+        public event Action<int> PlayerRankingUpdated;
+        public event Action RaceStarted;
+        public event Action PlayerFinished;
+        public event Action<float> PaintPercentageUpdate;
+
+        public RaceStatus Status { get { return m_Status; } }
 
         [Header("Spawn")]
         public GameObject PlayerPrefab;
@@ -35,22 +51,37 @@ namespace PlatformRunner
         public int Column = 5;
 
         [Header("Settings")]
+        public GameObject WallToPaint;
         public Transform FinishLine;
+        public FinishTrigger FinishTrigger;
 
-        public Action<GameObject> PlayerSpawned;
-        public Action<int> PlayerRankingUpdated;
+        private List<GameObject> m_Enemies = new List<GameObject>();
+        private List<Vector3> m_SpawnPositions = new List<Vector3>();
 
-        private List<GameObject> enemies = new List<GameObject>();
-        private List<Vector3> spawnPositions = new List<Vector3>();
-
-        private GameObject player;
-        private int playerRanking;
-        private bool raceStarted;
+        private RaceStatus m_Status;
+        private PlayerInputActions m_InputActions;
+        private GameObject m_Player;
+        private int m_PlayerRanking;
+        private bool m_RaceStarted;
+        private PaintTracker m_PaintTracker;
 
         private void Awake()
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            m_InputActions = new PlayerInputActions();
+            m_InputActions.Player.Enable();
+
+            m_InputActions.Player.StartRace.performed += StartRace;
+
+            FinishTrigger.PlayerFinished += OnPlayerFinished;
+
+            m_PaintTracker = WallToPaint.GetComponent<PaintTracker>();
+
+            m_PaintTracker.PaintPercentageUpdated += OnPaintPercentageUpdated;
+
+            m_Status = RaceStatus.ON_WAIT;
         }
 
         private void Start()
@@ -61,7 +92,7 @@ namespace PlatformRunner
             {
                 for (int j = 0; j < Column; j++)
                 {
-                    spawnPositions.Add(new Vector3(spawnPosition.x + (DistanceBetweenEachSpawn * j),
+                    m_SpawnPositions.Add(new Vector3(spawnPosition.x + (DistanceBetweenEachSpawn * j),
                                                    spawnPosition.y,
                                                    spawnPosition.z + (DistanceBetweenEachSpawn * i)));
                 }
@@ -72,13 +103,13 @@ namespace PlatformRunner
 
         private void Update()
         {
-            if (raceStarted)
+            if (m_RaceStarted)
             {
                 int newRanking = CalculatePlayerRanking();
 
-                if (playerRanking != newRanking)
+                if (m_PlayerRanking != newRanking)
                 {
-                    playerRanking = newRanking;
+                    m_PlayerRanking = newRanking;
                     PlayerRankingUpdated?.Invoke(newRanking);
                 }
             }
@@ -87,27 +118,25 @@ namespace PlatformRunner
         private void SpawnPlayers()
         {
             int playerSpawnIndex = UnityEngine.Random.Range(0, 10);
-            player = GameObject.Instantiate(PlayerPrefab, spawnPositions[playerSpawnIndex], Quaternion.identity);
-            PlayerSpawned?.Invoke(player);
+            m_Player = GameObject.Instantiate(PlayerPrefab, m_SpawnPositions[playerSpawnIndex], Quaternion.identity);
+            PlayerSpawned?.Invoke(m_Player);
             
             for (int i = 0; i < Row * Column; i++)
             {
                 if (i == playerSpawnIndex)
                     continue;
 
-                enemies.Add(GameObject.Instantiate(EnemyPrefab, spawnPositions[i], Quaternion.identity));
+                m_Enemies.Add(GameObject.Instantiate(EnemyPrefab, m_SpawnPositions[i], Quaternion.identity));
             }
-
-            StartRace();
         }
 
         private int CalculatePlayerRanking()
         {
-            int ranking = enemies.Count + 1;
+            int ranking = m_Enemies.Count + 1;
 
-            Vector3 playerPosition = player.transform.position;
+            Vector3 playerPosition = m_Player.transform.position;
 
-            foreach (GameObject enemy in enemies)
+            foreach (GameObject enemy in m_Enemies)
             {
                 Vector3 enemyPosition = enemy.transform.position;
 
@@ -118,14 +147,33 @@ namespace PlatformRunner
             return ranking;
         }
 
-        private void StartRace()
+        private void StartRace(InputAction.CallbackContext context)
         {
-            raceStarted = true;
+            Debug.Log("Enter pressed");
 
-            foreach (GameObject enemy in enemies)
+            if (!m_RaceStarted)
             {
-                enemy.GetComponent<AgentBehavior>().StartRacing(FinishLine);
+                RaceStarted?.Invoke();
+
+                foreach (GameObject enemy in m_Enemies)
+                {
+                    enemy.GetComponent<AgentBehavior>().StartRacing(FinishLine);
+                }
+
+                m_Status = RaceStatus.ACTIVE;
             }
+        }
+
+        private void OnPlayerFinished()
+        {
+            m_Status = RaceStatus.PAINTING;
+
+            PlayerFinished?.Invoke();
+        }
+
+        private void OnPaintPercentageUpdated(float value)
+        {
+            PaintPercentageUpdate?.Invoke(value);
         }
     } 
 }

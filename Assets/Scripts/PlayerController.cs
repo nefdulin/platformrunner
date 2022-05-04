@@ -11,53 +11,63 @@ namespace PlatformRunner
     {
         public float MovementSpeed = 15.0f;
 
-        private CharacterController characterController;
-        private NavMeshAgent agent;
-        private Rigidbody rigidbody;
-        private Animator animator; 
-        private PlayerInputActions inputActions;
+        private NavMeshAgent m_Agent;
+        private Rigidbody m_Rigidbody;
+        private Animator m_Animator;
+        private PlayerInputActions m_InputActions;
 
-        private Vector3 movementDirection = new Vector3(0, 0, 0);
-        private float movementInput;
+        private Vector3 m_MovementDirection = new Vector3(0, 0, 0);
+        private float m_MovementInput;
 
         private void Awake()
         {
-            rigidbody = GetComponent<Rigidbody>();
-            animator = GetComponent<Animator>();
-            agent = GetComponent<NavMeshAgent>();
+            m_Rigidbody = GetComponent<Rigidbody>();
+            m_Animator = GetComponent<Animator>();
+            m_Agent = GetComponent<NavMeshAgent>();
 
-            inputActions = new PlayerInputActions();
-            inputActions.Player.Enable();
+            m_InputActions = new PlayerInputActions();
+            m_InputActions.Player.Enable();
+
+            m_InputActions.Player.Paint.performed += OnStartPainting;
         }
 
         public void Update()
         {
-            movementInput = inputActions.Player.Movement.ReadValue<float>();
+            m_MovementInput = m_InputActions.Player.Movement.ReadValue<float>();
 
-            // Better than calling new every update
-            movementDirection.x = (movementInput * MovementSpeed);
-            movementDirection.z = (1 * MovementSpeed);
+            if (GameManager.Instance.Status == RaceStatus.ACTIVE)
+            {
+                // Better than calling new every update
+                m_MovementDirection.x = m_MovementInput;
+                m_MovementDirection.z = 1;
 
+                m_Agent.Move(m_MovementDirection * m_Agent.speed * Time.deltaTime);
+            }
 
-            agent.Move(movementDirection * Time.deltaTime);
-            //transform.Translate(movementDirection * Time.deltaTime);
-
-            animator.SetFloat("MovementInput", movementDirection.magnitude);
+            m_Animator.SetFloat("MovementInput", m_MovementDirection.magnitude);
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log("Fired from player");
+            if (collision.collider.tag == "Obstacle")
+            {
+                Debug.Log("Collided with obstacle");
+            }
         }
 
         private void OnDisable()
         {
-            inputActions.Player.Disable();
+            m_InputActions.Player.Disable();
         }
 
         private void OnDestroy()
         {
-            inputActions.Player.Disable();
+            m_InputActions.Player.Disable();
+        }
+
+        private void OnStartPainting(InputAction.CallbackContext context)
+        {
+            Debug.Log("Pressed");
         }
     } 
 }

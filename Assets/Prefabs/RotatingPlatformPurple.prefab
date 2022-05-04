@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5919086603876792106}
   - component: {fileID: 7316953506833135759}
   - component: {fileID: 4787323360889965637}
+  - component: {fileID: 7893648669112187970}
+  - component: {fileID: 316070514160082513}
   m_Layer: 0
   m_Name: RotatingPlatformPurple
   m_TagString: Untagged
@@ -81,3 +83,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7893648669112187970
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444371014639496592}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1643726260354785405, guid: 53d8b37ad1ad4e34ea46d0f65837b656, type: 3}
+--- !u!114 &316070514160082513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444371014639496592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06912076f7b1f446b91a1f6558ac486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 15
+  SlideForce: 2
