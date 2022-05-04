@@ -6,7 +6,8 @@ namespace PlatformRunner
 {
     public class PaintTracker : MonoBehaviour
     {
-        public Action<float> PaintPercentageUpdated;
+        [SerializeField]
+        private FloatEventChannelSO m_OnPaintPercentageUpdate;
 
         private InkCanvas canvas;
         private Texture2D texture;
@@ -95,7 +96,7 @@ namespace PlatformRunner
             {
                 percentage = newPercentage;
 
-                PaintPercentageUpdated?.Invoke(percentage);
+                m_OnPaintPercentageUpdate.RaiseEvent(percentage);
             }
         }
     }

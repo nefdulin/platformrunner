@@ -932,6 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 5
+  m_OnGameOver: {fileID: 11400000, guid: 34c5160d30b15a54597f15fe8d64c29f, type: 2}
 --- !u!114 &919132149219046805
 MonoBehaviour:
   m_ObjectHideFlags: 0

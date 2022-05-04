@@ -13,11 +13,7 @@ namespace PlatformRunner
         private Vector3 m_Offset; 
         private float m_Distance;
         private bool m_RaceFinished = false;
-        private void Awake()
-        {
-            GameManager.Instance.PlayerSpawned  += OnPlayerSpawned;
-            GameManager.Instance.PlayerFinished += OnPlayerFinished;
-        }
+
         private void LateUpdate()
         {
             if (m_Player != null)
@@ -29,14 +25,15 @@ namespace PlatformRunner
                 }
             }
         }
-        private void OnPlayerSpawned(GameObject spawnedPlayer)
+        public void OnPlayerSpawn(GameObject spawnedPlayer)
         {
+            Debug.Log("Got the event");
             m_Player = spawnedPlayer;
             transform.position = new Vector3(m_Player.transform.position.x, transform.position.y, transform.position.z);
             m_Offset = transform.position - m_Player.transform.position;
         }
 
-        private void OnPlayerFinished()
+        public void OnPlayerFinish()
         {
             m_RaceFinished = true;
 

@@ -13,22 +13,11 @@ namespace PlatformRunner
         private void Start()
         {
             m_Text = GetComponent<Text>();
-
-            GameManager.Instance.PlayerFinished += OnPlayerFinished;
         }
 
-        private void Update()
-        {
-            GameManager.Instance.PlayerRankingUpdated += OnPlayerRankingUpdated;
-        }
-
-        void OnPlayerRankingUpdated(int newRanking)
+        public void OnPlayerRankingUpdate(int newRanking)
         {
             m_Text.text = "Ranking: " + newRanking;
-        }
-        private void OnPlayerFinished()
-        {
-            m_Text.enabled = false;
         }
     }
 }

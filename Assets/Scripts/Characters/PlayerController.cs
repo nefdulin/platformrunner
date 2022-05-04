@@ -11,8 +11,10 @@ namespace PlatformRunner
     {
         public float MovementSpeed = 15.0f;
 
+        [SerializeField]
+        private EmptyEventChannelSO m_OnGameOver;
+
         private NavMeshAgent m_Agent;
-        private Rigidbody m_Rigidbody;
         private Animator m_Animator;
         private PlayerInputActions m_InputActions;
 
@@ -21,23 +23,20 @@ namespace PlatformRunner
 
         private void Awake()
         {
-            m_Rigidbody = GetComponent<Rigidbody>();
             m_Animator = GetComponent<Animator>();
             m_Agent = GetComponent<NavMeshAgent>();
 
             m_InputActions = new PlayerInputActions();
             m_InputActions.Player.Enable();
-
-            m_InputActions.Player.Paint.performed += OnStartPainting;
         }
 
         public void Update()
         {
             m_MovementInput = m_InputActions.Player.Movement.ReadValue<float>();
 
-            if (GameManager.Instance.Status == RaceStatus.ACTIVE)
+            m_MovementDirection = new Vector3(0.0f, 0.0f, 0.0f);
+            if (GameManager.Instance.Status == GameStatus.RACING)
             {
-                // Better than calling new every update
                 m_MovementDirection.x = m_MovementInput;
                 m_MovementDirection.z = 1;
 
@@ -51,7 +50,8 @@ namespace PlatformRunner
         {
             if (collision.collider.tag == "Obstacle")
             {
-                Debug.Log("Collided with obstacle");
+                m_Animator.SetBool("IsDead", true);
+                m_OnGameOver.RaiseEvent();
             }
         }
 
@@ -63,11 +63,6 @@ namespace PlatformRunner
         private void OnDestroy()
         {
             m_InputActions.Player.Disable();
-        }
-
-        private void OnStartPainting(InputAction.CallbackContext context)
-        {
-            Debug.Log("Pressed");
         }
     } 
 }

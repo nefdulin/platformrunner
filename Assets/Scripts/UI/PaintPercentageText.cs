@@ -11,21 +11,11 @@ namespace PlatformRunner
         private void Start()
         {
             m_Text = GetComponent<Text>();
-            m_Text.enabled = false;
-
-            GameManager.Instance.PlayerFinished += OnPlayerFinished;
-            GameManager.Instance.PaintPercentageUpdate += OnUpdatePaintPercentage;
         }
 
-        void OnUpdatePaintPercentage(float value)
+        public void OnUpdatePaintPercentage(float value)
         {
-            Debug.Log(value);
             m_Text.text = "Percentage: " + value;
-        }
-
-        private void OnPlayerFinished()
-        {
-            m_Text.enabled = true;
         }
     }
 

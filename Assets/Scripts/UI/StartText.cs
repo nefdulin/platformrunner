@@ -12,13 +12,16 @@ namespace PlatformRunner
         private void Start()
         {
             m_Text = GetComponent<Text>();
-
-            GameManager.Instance.RaceStarted += OnRaceStarted;
         }
 
-        private void OnRaceStarted()
+        public void OnRaceStarted()
         {
             m_Text.enabled = false;
+        }
+
+        public void OnCountdownUpdate(float value)
+        {
+            m_Text.text = "Starts in\n" + (int)value;
         }
     }
 }

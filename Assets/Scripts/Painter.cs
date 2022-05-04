@@ -23,20 +23,20 @@ namespace PlatformRunner
 
         private void Update()
         {
-            RaceStatus status = GameManager.Instance.Status;
+            GameStatus status = GameManager.Instance.Status;
 
-            if (status == RaceStatus.PAINTING)
+            if (status == GameStatus.PAINTING)
             {
                 if (m_InputActions.Player.Paint.IsPressed())
                 {
 					if (Input.GetMouseButton(0))
 					{
-						var ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+						Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
 						RaycastHit hitInfo;
 						if (Physics.Raycast(ray, out hitInfo))
 						{
-							var paintObject = hitInfo.transform.GetComponent<InkCanvas>();
-                            paintObject.Paint(Brush, hitInfo);
+							InkCanvas paintObject = hitInfo.transform.GetComponent<InkCanvas>();
+                            paintObject?.Paint(Brush, hitInfo);
                         }
 					}
 				}
