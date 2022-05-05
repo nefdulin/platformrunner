@@ -12,7 +12,7 @@ namespace PlatformRunner
 
         private Transform m_Destination;
         private Vector3 m_StartingPosition;
-        private bool m_Racing = false;
+        private NavMeshPath m_Path;
 
         private void Awake()
         {
@@ -29,10 +29,10 @@ namespace PlatformRunner
         {
             m_StartingPosition = transform.position;
             m_Destination = finishLine;
-            m_Racing = true;
 
             m_Agent.SetDestination(m_Destination.position);
         }
+
 
         private void OnCollisionEnter(Collision collision)
         {

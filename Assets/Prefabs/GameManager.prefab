@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1996247990435482995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1996247990435483005}
+  - component: {fileID: 1996247990435482994}
+  - component: {fileID: 1996247990435483004}
+  - component: {fileID: 1996247990435483007}
+  - component: {fileID: 1996247990435483006}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1996247990435483005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996247990435482995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.110066, y: 14.522152, z: -63.555935}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1996247990435482994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996247990435482995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2399918557d043408dc23a58b8ee7f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnRaceStart: {fileID: 11400000, guid: 482958f3ce011e84b921a9ce3e83d94e, type: 2}
+  m_OnPlayerSpawn: {fileID: 11400000, guid: c6bf16e38e6396d439a2413a1520d7fb, type: 2}
+  m_OnPlayerRankingUpdate: {fileID: 11400000, guid: 718edd25c9638444581e5cd9ebc6adf6, type: 2}
+  m_OnCountdownUpdate: {fileID: 11400000, guid: 21561d794e68c3d43a425f8b85773d59, type: 2}
+  m_OnPlayerFinishPainting: {fileID: 11400000, guid: 131949a1f7239e84ea90edfe38b50c4d, type: 2}
+  PlayerPrefab: {fileID: 7763301884443644709, guid: 4126f2a8609fbc74c99acb31feb57d0d, type: 3}
+  EnemyPrefab: {fileID: 5443238610594084445, guid: 58bae0459c8e72c4b9646d610af3eaf5, type: 3}
+  SpawnTransform: {fileID: 0}
+  DistanceBetweenEachSpawn: 4
+  Row: 2
+  Column: 5
+  FinishLine: {fileID: 0}
+--- !u!114 &1996247990435483004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996247990435482995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961055457cc18524c82249cfd44f7aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEventRaised:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1996247990435482994}
+        m_TargetAssemblyTypeName: PlatformRunner.GameManager, Assembly-CSharp
+        m_MethodName: OnPlayerFinishRace
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_Channel: {fileID: 11400000, guid: 1f7e6465ac07539448c2189cf7d8fb38, type: 2}
+--- !u!114 &1996247990435483007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996247990435482995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961055457cc18524c82249cfd44f7aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEventRaised:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1996247990435482994}
+        m_TargetAssemblyTypeName: PlatformRunner.GameManager, Assembly-CSharp
+        m_MethodName: OnGameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_Channel: {fileID: 11400000, guid: 34c5160d30b15a54597f15fe8d64c29f, type: 2}
+--- !u!114 &1996247990435483006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996247990435482995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc618e2f12df4dd4f8a5abe9d7f25f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEventRaised:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1996247990435482994}
+        m_TargetAssemblyTypeName: PlatformRunner.GameManager, Assembly-CSharp
+        m_MethodName: PaintPercentageUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_Channel: {fileID: 11400000, guid: 9c494d34780f3cc4d8f5ccb7a469f3ac, type: 2}

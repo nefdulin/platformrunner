@@ -73,7 +73,6 @@ namespace PlatformRunner
         private void Awake()
         {
             instance = this;
-            // DontDestroyOnLoad(gameObject);
 
             m_InputActions = new PlayerInputActions();
             m_InputActions.Player.Enable();
@@ -112,15 +111,15 @@ namespace PlatformRunner
                 for (int j = 0; j < Column; j++)
                 {
                     m_SpawnPositions.Add(new Vector3(spawnPosition.x + (DistanceBetweenEachSpawn * j),
-                                                   spawnPosition.y,
-                                                   spawnPosition.z + (DistanceBetweenEachSpawn * i)));
+                                                     spawnPosition.y,
+                                                     spawnPosition.z + (DistanceBetweenEachSpawn * i)));
                 }
             }
         }
 
         private void SpawnPlayers()
         {
-            int playerSpawnIndex = UnityEngine.Random.Range(0, 10);
+            int playerSpawnIndex = UnityEngine.Random.Range(0, 5);
             m_Player = GameObject.Instantiate(PlayerPrefab, m_SpawnPositions[playerSpawnIndex], Quaternion.identity);
             m_OnPlayerSpawn.RaiseEvent(m_Player);
             

@@ -27,7 +27,6 @@ namespace PlatformRunner
         }
         public void OnPlayerSpawn(GameObject spawnedPlayer)
         {
-            Debug.Log("Got the event");
             m_Player = spawnedPlayer;
             transform.position = new Vector3(m_Player.transform.position.x, transform.position.y, transform.position.z);
             m_Offset = transform.position - m_Player.transform.position;

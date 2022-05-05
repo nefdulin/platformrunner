@@ -962,6 +962,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9a0e77dd-df3e-4ead-9876-8197378538b4
     m_ActionName: Player/Movement[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7afe64c7-1b1c-48b1-9118-34807f2771de
+    m_ActionName: Player/StartRace[/Keyboard/enter,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cea48cbc-783c-4b72-9db3-8c13b679bcfd
+    m_ActionName: Player/Paint[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1ffa0979-03ff-4346-a17c-1dcdeda9987a
+    m_ActionName: Player/Restart[/Keyboard/enter,/Keyboard/numpadEnter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
@@ -993,7 +1005,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.7
+  m_Radius: 0.77
   m_Height: 2.8
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -1006,8 +1018,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 7763301884443644709}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 4
+  m_Radius: 0.7
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -1015,7 +1027,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2.4
+  m_Height: 2.2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
