@@ -9,78 +9,35 @@ namespace PlatformRunner
         [SerializeField]
         private FloatEventChannelSO m_OnPaintPercentageUpdate;
 
-        private InkCanvas canvas;
-        private Texture2D texture;
-        private RenderTexture paintTexture;
+        private InkCanvas m_Canvas;
+        private Texture2D m_Texture;
+        private RenderTexture m_PaintTexture;
 
-        private int textureLength = 0;
-        private float percentage = 0.0f; 
+        private int m_TextureLength = 0;
+        private float m_Percentage = 0.0f; 
+
         void Start()
         {
-            canvas = GetComponent<InkCanvas>();
+            m_Canvas = GetComponent<InkCanvas>();
 
-            canvas.OnInitializedAfter += SetupTextures;
-            canvas.OnPaintEnd += OnPaintEnd;
+            m_Canvas.OnInitializedAfter += SetupTextures;
+            m_Canvas.OnPaintEnd += OnPaintEnd;
         }
 
-        private void Update()
-        {
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    timer = 0.0f;
-            //    painting = true;
-            //}
-
-            //if (Input.GetMouseButton(0))
-            //{
-            //    if (painting == true)
-            //    {
-            //        if (timer >= UpdateInterval)
-            //        {
-            //            RenderTexture.active = paintTexture;
-            //            texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
-            //            texture.Apply();
-            //            Debug.Log("We read the data");
-
-            //            Color[] colorBuffer = texture.GetPixels();
-
-            //            int redCounter = 0;
-            //            foreach (Color color in colorBuffer)
-            //            {
-            //                if (color == Color.red)
-            //                {
-            //                    redCounter++;
-            //                }
-            //            }
-
-            //            Debug.Log("Red amount" + redCounter);
-            //            timer = 0.0f;
-            //        }
-
-            //        timer += Time.deltaTime;
-            //    }
-            //}
-
-            //if (Input.GetMouseButtonUp(0))
-            //{
-            //    timer = 0.0f;
-            //    painting = false;
-            //}
-
-        }
         void SetupTextures(InkCanvas paintedCanvas)
         {
-            paintTexture = canvas.GetPaintMainTexture("PaintWall");
-            texture = new Texture2D(paintTexture.width, paintTexture.height);
-            textureLength = texture.width * texture.height;
+            m_PaintTexture = m_Canvas.GetPaintMainTexture("PaintWall");
+            m_Texture = new Texture2D(m_PaintTexture.width, m_PaintTexture.height);
+            m_TextureLength = m_Texture.width * m_Texture.height;
         }
+
         void OnPaintEnd(InkCanvas paintedCanvas)
         {
-            RenderTexture.active = paintTexture;
-            texture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
-            texture.Apply();
+            RenderTexture.active = m_PaintTexture;
+            m_Texture.ReadPixels(new Rect(0, 0, m_Texture.width, m_Texture.height), 0, 0);
+            m_Texture.Apply();
 
-            Color[] colorBuffer = texture.GetPixels();
+            Color[] colorBuffer = m_Texture.GetPixels();
 
             int redCounter = 0;
             foreach (Color color in colorBuffer)
@@ -91,12 +48,12 @@ namespace PlatformRunner
                 }
             }
 
-            float newPercentage = 100 * ((float) redCounter / (float) textureLength);
-            if (newPercentage != percentage)
+            float newPercentage = 100 * ((float) redCounter / (float) m_TextureLength);
+            if (newPercentage != m_Percentage)
             {
-                percentage = newPercentage;
+                m_Percentage = newPercentage;
 
-                m_OnPaintPercentageUpdate.RaiseEvent(percentage);
+                m_OnPaintPercentageUpdate.RaiseEvent(m_Percentage);
             }
         }
     }
